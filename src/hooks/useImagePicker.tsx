@@ -78,6 +78,8 @@ export const useImagePicker = () => {
             setIsLoading(false);
         } catch (error) {
             console.error('Error al cargar la imagen:', error);
+            setSelectedImage(undefined);
+            setIsLoading(false);
         }
     }
 
