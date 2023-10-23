@@ -11,6 +11,8 @@ export const useImagePicker = () => {
 
     const [selectedImage, setSelectedImage] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    let contador: number = 0;
+    let urlBase: string = 'http://189.84.99.38:10446/api/'
 
     ///Abrir Camara
     const AbrirCamara = () => {
@@ -56,6 +58,23 @@ export const useImagePicker = () => {
         });
     };
 
+    ///Test api
+    const testApi = async () => {
+        if (contador == 3) {
+            axios.get(urlBase + 'Imagenes/Datetime')
+                .then(response => {
+                    ToastAndroid.show('Resultado: ' + response.data, ToastAndroid.SHORT);
+                })
+                .catch(error => {
+                    // Maneja cualquier error que pueda ocurrir
+                    ToastAndroid.show(error.message, ToastAndroid.SHORT);
+                });
+            contador = 0;
+        } else {
+            contador++;
+        }
+    }
+
     const SubirImagen = async () => {
         setIsLoading(true);
         ToastAndroid.show('Iniciando el proceso de subida', ToastAndroid.SHORT);
@@ -66,21 +85,21 @@ export const useImagePicker = () => {
             type: 'image/jpeg',
             name: 'image/jpg',
         });
-        try {
-            const response = await axios.post('http://189.84.99.38:10446/api/Imagenes/UploadImage', formData, {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                },
-              })
+        const response = await axios.post(urlBase + 'Imagenes/UploadImage', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }).then((response => {
             console.log(response.data)
             ToastAndroid.show('Imagen subida con éxito', ToastAndroid.SHORT);
             setSelectedImage(undefined);
             setIsLoading(false);
-        } catch (error) {
-            console.error('Error al cargar la imagen:', error);
-            setSelectedImage(undefined);
-            setIsLoading(false);
-        }
+        }))
+            .catch(error => {
+                ToastAndroid.show(error.message, ToastAndroid.SHORT);
+                setSelectedImage(undefined);
+                setIsLoading(false);
+            })
     }
 
     return {
@@ -88,6 +107,8 @@ export const useImagePicker = () => {
         AbrirGaleria,
         selectedImage,
         SubirImagen,
-        isLoading
+        isLoading,
+        contador,
+        testApi
     }
 }

@@ -4,7 +4,7 @@ import { useImagePicker } from '../hooks/useImagePicker';
 
 export const PrincipalScreen = () => {
 
-    const { AbrirCamara, AbrirGaleria, selectedImage, SubirImagen, isLoading
+    const { AbrirCamara, AbrirGaleria, selectedImage, SubirImagen, isLoading, testApi
     } = useImagePicker();
 
     return (
@@ -44,7 +44,7 @@ export const PrincipalScreen = () => {
             )}
 
             <View>
-                <Text style={styles.TextoFooter}>Reunión Aseguradora Salvadoreña S.A. de C.V.</Text>
+                <Text onPress={testApi} style={styles.TextoFooter}>Reunión Aseguradora Salvadoreña S.A. de C.V.</Text>
             </View>
         </View>
     )
@@ -56,19 +56,23 @@ const styles = StyleSheet.create({
     },
     TextoPrincipal: {
         fontSize: 30,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#fff'
     },
     TextoSecundario: {
         fontSize: 15,
+        color: '#D9D9D9'
     },
     TextoExplicacion: {
         fontSize: 9,
-        marginTop: 10
+        marginTop: 10,
+        color: '#D9D9D9'
     },
     TextoFooter: {
         fontSize: 12,
         fontWeight: '100',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#D9D9D9'
     }
 
 });
