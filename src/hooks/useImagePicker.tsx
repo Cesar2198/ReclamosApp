@@ -6,9 +6,10 @@ import {
 } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import { ToastAndroid } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export const useImagePicker = () => {
-
+    const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [selectedImage, setSelectedImage] = useState();
     const [isLoading, setIsLoading] = useState(false);
     let contador: number = 0;
@@ -30,13 +31,13 @@ export const useImagePicker = () => {
                 console.log('Camera Error: ', response.error);
             } else {
                 let imageUri = response.uri || response.assets?.[0]?.uri;
-                setSelectedImage(imageUri);
+                setSelectedImages([...selectedImages, imageUri]);
                 console.log(imageUri);
             }
         });
     }
 
-
+    ///Abrir la Galeria individualmente
     const AbrirGaleria = () => {
         const options: ImageLibraryOptions = {
             mediaType: 'photo',
@@ -78,29 +79,45 @@ export const useImagePicker = () => {
     const SubirImagen = async () => {
         setIsLoading(true);
         ToastAndroid.show('Iniciando el proceso de subida', ToastAndroid.SHORT);
-
-        const formData = new FormData();
-        formData.append('image', {
-            uri: selectedImage,
-            type: 'image/jpeg',
-            name: 'image/jpg',
-        });
-        const response = await axios.post(urlBase + 'Imagenes/UploadImage', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        }).then((response => {
-            console.log(response.data)
-            ToastAndroid.show('Imagen subida con éxito', ToastAndroid.SHORT);
-            setSelectedImage(undefined);
-            setIsLoading(false);
-        }))
-            .catch(error => {
-                ToastAndroid.show(error.message, ToastAndroid.SHORT);
-                setSelectedImage(undefined);
-                setIsLoading(false);
-            })
+        selectedImages.map(async (image, index) => {
+            const formData = new FormData();
+            formData.append('image', {
+                uri: image,
+                type: 'image/jpeg',
+                name: 'image/jpg',
+            });
+            const response = await axios.post(urlBase + 'Imagenes/UploadImage', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }).then((response => {
+                console.log(response.data)
+                ToastAndroid.show(`Imagen ${index + 1} subida con éxito`, ToastAndroid.SHORT);
+            }))
+                .catch(error => {
+                    ToastAndroid.show(error.message, ToastAndroid.SHORT);
+                })
+        })
+        setSelectedImages([]);
+        setIsLoading(false);
     }
+
+    ///Elegir multiples imagenes
+    const pickImages = async () => {
+        try {
+            const images = await ImagePicker.openPicker({
+                multiple: true,
+                mediaType: 'photo',
+            });
+
+            // images contiene las imágenes seleccionadas
+            setSelectedImages([...selectedImages, ...images.map((image: any) => image.path)]);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
 
     return {
         AbrirCamara,
@@ -109,6 +126,9 @@ export const useImagePicker = () => {
         SubirImagen,
         isLoading,
         contador,
+        pickImages,
+        selectedImages,
+        setSelectedImages,
         testApi
     }
 }
