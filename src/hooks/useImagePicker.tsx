@@ -113,7 +113,7 @@ export const useImagePicker = () => {
             // images contiene las imágenes seleccionadas
             setSelectedImages([...selectedImages, ...images.map((image: any) => image.path)]);
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
     };
 
