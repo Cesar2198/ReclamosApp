@@ -1,18 +1,26 @@
-import React from 'react'
-import { SafeAreaView, StatusBar} from 'react-native'
-import { PrincipalScreen } from './src/screens/PrincipalScreen';
+import 'react-native-gesture-handler';
+import React from 'react';
+import { SafeAreaView, StatusBar, Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
+import { Navigator } from './src/navigator/Navigator';
 
-export const App = () => {
+const App = () => {
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: '#8E9B90'
-    }}>
+    <NavigationContainer>
+      <SafeAreaView style={{
+        flex: 1,
+        backgroundColor: '#8E9B90'
+      }}>
         <StatusBar
-        backgroundColor="#8E9B90"
-        barStyle='light-content'
-      />
-     <PrincipalScreen/>
-    </SafeAreaView>
+          backgroundColor="#5C685E"
+          barStyle='light-content'
+        />
+        <Navigator />
+      </SafeAreaView>
+    </NavigationContainer>
+
   )
 }
+
+
+export default App;

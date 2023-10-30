@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useImagePicker } from '../hooks/useImagePicker';
 import { ButtonApp } from '../components/ButtonApp';
+import { StackScreenProps } from '@react-navigation/stack'
 import { Picker } from '@react-native-picker/picker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const PrincipalScreen = () => {
+interface Props extends StackScreenProps<any, any> { };
+
+
+export const PrincipalScreen = ({ navigation }: Props) => {
 
     const { AbrirCamara, AbrirGaleria, selectedImage, SubirImagen, isLoading, testApi
         , pickImages, selectedImages, setSelectedImages, selectedCarpeta, setSelectedCarpeta,
         Carpetas
     } = useImagePicker();
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: false
+        })
+    }, [])
 
     return (
         <ScrollView style={styles.Contenedor}>
@@ -76,6 +87,20 @@ export const PrincipalScreen = () => {
                     />
                 </View>
             )}
+
+
+            <View style={{ marginTop: 10, marginBottom: 30 }}>
+                <ButtonApp
+                    texto='Ir a Subida'
+                    color='#B6C4A2'
+                    accion={() => navigation.navigate("SubidaScreen", {
+                        id: 1,
+                        nombre: "Pedro"
+                    })}
+                />
+            </View>
+
+
             <View>
                 <Text onPress={testApi} style={styles.TextoFooter}>Reunión Aseguradora Salvadoreña S.A. de C.V.</Text>
             </View>
