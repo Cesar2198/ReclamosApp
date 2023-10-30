@@ -2,18 +2,20 @@ import React from 'react'
 import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useImagePicker } from '../hooks/useImagePicker';
 import { ButtonApp } from '../components/ButtonApp';
+import { Picker } from '@react-native-picker/picker';
 
 export const PrincipalScreen = () => {
 
     const { AbrirCamara, AbrirGaleria, selectedImage, SubirImagen, isLoading, testApi
-        , pickImages, selectedImages, setSelectedImages
+        , pickImages, selectedImages, setSelectedImages, selectedCarpeta, setSelectedCarpeta,
+        Carpetas
     } = useImagePicker();
 
     return (
         <ScrollView style={styles.Contenedor}>
             <View>
                 <Text style={styles.TextoPrincipal}>Subida de imágenes</Text>
-                <Text style={styles.TextoSecundario}>Reclamos daños RAS</Text>
+                <Text style={styles.TextoSecundario}>Reunión Aseguradora Salvadoreña</Text>
                 <Text style={styles.TextoExplicacion}>Seleccione una imagen de su galeria o tome una fotografía* </Text>
             </View>
             {selectedImages.length > 0 && (
@@ -23,7 +25,7 @@ export const PrincipalScreen = () => {
                     ))}
                 </ScrollView>
             )}
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: 10 }}>
                 <ButtonApp
                     texto='Abrir Galería'
                     color='#B6C4A2'
@@ -31,7 +33,7 @@ export const PrincipalScreen = () => {
                 />
             </View>
 
-            <View style={{ marginTop: 20, marginBottom: 30 }}>
+            <View style={{ marginTop: 10, marginBottom: 30 }}>
                 <ButtonApp
                     texto='Abrir Cámara'
                     color='#B6C4A2'
@@ -40,9 +42,27 @@ export const PrincipalScreen = () => {
             </View>
 
             {selectedImages.length > 0 && (
+
                 <View style={{
                     marginTop: 10, marginBottom: 50, gap: 20
                 }}>
+
+                    {/* Especificar a cual carpeta lo subiremos */}
+                    <View>
+                        <Text>Selecciona la carpeta de destino:</Text>
+                        <Picker
+                            selectedValue={selectedCarpeta}
+                            onValueChange={(itemValue) => setSelectedCarpeta(itemValue)}
+                            style={{ width: '100%' }}
+                        >
+                            <Picker.Item label="Selecciona la carpeta de destino" value="" />
+                            {Carpetas.map((carpeta) => (
+                                <Picker.Item key={carpeta.id} label={carpeta.name} value={carpeta.url} />
+                            ))}
+                        </Picker>
+                    </View>
+
+
                     <Text style={styles.TextoSecundario}>Acciones</Text>
                     <ButtonApp
                         texto='Cancelar'
