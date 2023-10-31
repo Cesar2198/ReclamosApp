@@ -4,7 +4,6 @@ import {
     launchImageLibrary, ImageLibraryOptions, launchCamera
     , CameraOptions
 } from 'react-native-image-picker';
-import Toast from 'react-native-toast-message';
 import { ToastAndroid } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -130,7 +129,7 @@ export const useImagePicker = () => {
     };
     ///Carpetas para guardar imagenes
     const Carpetas = [
-        { id: '1', name: 'Reclamos', url: "D:\\Reclamos\\DAÑOS\\FOTOGRAFIAS DE INSPECCIONES" },
+        { id: '1', name: 'Reclamos Daños', url: "D:\\Reclamos\\DAÑOS\\FOTOGRAFIAS DE INSPECCIONES", icono: '' },
         { id: '2', name: 'Cobros', url: "D:\\Cobros" },
         { id: '3', name: 'Operaciones', url: "D:\\Operaciones" },
         // { id: '4', name: 'Public', url: "\\\\192.168.0.140\\public" }

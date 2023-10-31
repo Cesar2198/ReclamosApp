@@ -3,106 +3,45 @@ import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useImagePicker } from '../hooks/useImagePicker';
 import { ButtonApp } from '../components/ButtonApp';
 import { StackScreenProps } from '@react-navigation/stack'
-import { Picker } from '@react-native-picker/picker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props extends StackScreenProps<any, any> { };
 
 
 export const PrincipalScreen = ({ navigation }: Props) => {
 
-    const { AbrirCamara, AbrirGaleria, selectedImage, SubirImagen, isLoading, testApi
-        , pickImages, selectedImages, setSelectedImages, selectedCarpeta, setSelectedCarpeta,
+    const {
         Carpetas
     } = useImagePicker();
 
     useEffect(() => {
         navigation.setOptions({
-            headerShown: false
+            headerBackTitle: '',
+            headerStyle: {
+                backgroundColor: '#5C685E', // Cambia el color de fondo de la barra de navegación
+            },
+            headerTintColor: 'white', // Cambia el color del texto del título
         })
     }, [])
 
     return (
         <ScrollView style={styles.Contenedor}>
             <View>
-                <Text style={styles.TextoPrincipal}>Subida de imágenes</Text>
+                <Text style={styles.TextoPrincipal}>Bienvenido/a</Text>
                 <Text style={styles.TextoSecundario}>Reunión Aseguradora Salvadoreña</Text>
-                <Text style={styles.TextoExplicacion}>Seleccione una imagen de su galeria o tome una fotografía* </Text>
+                <Text style={styles.TextoExplicacion}>Ingresa según tu departamento asignado </Text>
             </View>
-            {selectedImages.length > 0 && (
-                <ScrollView horizontal style={styles.vistaImagenes}>
-                    {selectedImages.map((image, index) => (
-                        <Image key={index} source={{ uri: image }} style={{ width: 300, height: 300, marginLeft: 10, borderRadius: 10 }} />
-                    ))}
-                </ScrollView>
-            )}
-            <View style={{ marginTop: 10 }}>
-                <ButtonApp
-                    texto='Abrir Galería'
-                    color='#B6C4A2'
-                    accion={pickImages}
-                />
-            </View>
-
-            <View style={{ marginTop: 10, marginBottom: 30 }}>
-                <ButtonApp
-                    texto='Abrir Cámara'
-                    color='#B6C4A2'
-                    accion={AbrirCamara}
-                />
-            </View>
-
-            {selectedImages.length > 0 && (
-
-                <View style={{
-                    marginTop: 10, marginBottom: 50, gap: 20
-                }}>
-
-                    {/* Especificar a cual carpeta lo subiremos */}
+            <View style={styles.cardContainer}>
+                {Carpetas.map((carpeta) => (
                     <View>
-                        <Text>Selecciona la carpeta de destino:</Text>
-                        <Picker
-                            selectedValue={selectedCarpeta}
-                            onValueChange={(itemValue) => setSelectedCarpeta(itemValue)}
-                            style={{ width: '100%' }}
-                        >
-                            <Picker.Item label="Selecciona la carpeta de destino" value="" />
-                            {Carpetas.map((carpeta) => (
-                                <Picker.Item key={carpeta.id} label={carpeta.name} value={carpeta.url} />
-                            ))}
-                        </Picker>
+                        <ButtonApp texto={carpeta.name}
+                            key={carpeta.id}
+                            accion={() => navigation.navigate("SubidaScreen", {
+                                carpeta: carpeta
+                            })}
+                            color='#5C685E'
+                        />
                     </View>
-
-
-                    <Text style={styles.TextoSecundario}>Acciones</Text>
-                    <ButtonApp
-                        texto='Cancelar'
-                        color='#D80032'
-                        accion={() => setSelectedImages([])}
-                    />
-                    <ButtonApp
-                        texto='Subir imagen(es) a carpeta'
-                        color='#93C0A4'
-                        accion={SubirImagen}
-                    />
-                </View>
-            )}
-
-
-            <View style={{ marginTop: 10, marginBottom: 30 }}>
-                <ButtonApp
-                    texto='Ir a Subida'
-                    color='#B6C4A2'
-                    accion={() => navigation.navigate("SubidaScreen", {
-                        id: 1,
-                        nombre: "Pedro"
-                    })}
-                />
-            </View>
-
-
-            <View>
-                <Text onPress={testApi} style={styles.TextoFooter}>Reunión Aseguradora Salvadoreña S.A. de C.V.</Text>
+                ))}
             </View>
         </ScrollView>
     )
@@ -110,13 +49,15 @@ export const PrincipalScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
     Contenedor: {
-        flex: 300,
-        marginHorizontal: 30,
+        flex: 1,
+        paddingHorizontal: 30,
         paddingTop: 20,
-        paddingBottom: 20
+        paddingBottom: 20,
+        backgroundColor: '#8E9B90',
+        elevation: 1
     },
     TextoPrincipal: {
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: 'bold',
         color: '#fff'
     },
@@ -125,20 +66,13 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     TextoExplicacion: {
-        fontSize: 9,
+        fontSize: 10,
         marginTop: 10,
         color: '#D9D9D9'
     },
-    TextoFooter: {
-        fontSize: 12,
-        fontWeight: '100',
-        textAlign: 'center',
-        color: '#D9D9D9'
+    cardContainer: {
+        marginTop: 30,
+        display: 'flex',
+        gap: 20
     },
-    vistaImagenes: {
-        marginTop: 20,
-        marginBottom: 20,
-        borderRadius: 10
-    }
-
 });

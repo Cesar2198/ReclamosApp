@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { PrincipalScreen } from '../screens/PrincipalScreen';
-import { Subida } from '../screens/Subida';
+import { Subida } from '../screens/SubidaScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,9 +14,7 @@ export const Navigator = () => {
                     elevation: 0,
                     shadowColor: 'transparent'
                 },
-                cardStyle: {
-                    backgroundColor: '#8E9B90'
-                }
+
             }}
         >
             <Stack.Screen name="Inicio" options={{

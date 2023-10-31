@@ -31,7 +31,7 @@ export const ButtonApp = ({ texto, color = "#2D2D2D", accion }: BotonAppProps) =
 const styles = StyleSheet.create({
     boton: {
         width: '100%',
-        padding: 10,
+        padding: 12,
         borderRadius: 10,
         elevation: 3, 
     },
