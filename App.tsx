@@ -9,10 +9,10 @@ const App = () => {
     <NavigationContainer>
       <SafeAreaView style={{
         flex: 1,
-        backgroundColor: '#8E9B90'
+        backgroundColor: '#407088'
       }}>
         <StatusBar
-          backgroundColor="#5C685E"
+          backgroundColor="#22313f"
           barStyle='light-content'
         />
         <Navigator />

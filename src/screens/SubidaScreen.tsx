@@ -27,7 +27,7 @@ export const Subida = ({ navigation, route }: Props) => {
             title: params?.carpeta.name,
             headerBackTitle: '',
             headerStyle: {
-                backgroundColor: '#5C685E', // Cambia el color de fondo de la barra de navegación
+                backgroundColor: '#22313f', // Cambia el color de fondo de la barra de navegación
             },
             headerTintColor: 'white', // Cambia el color del texto del título
         })
@@ -50,7 +50,7 @@ export const Subida = ({ navigation, route }: Props) => {
         <View style={{ marginTop: 10 }}>
             <ButtonApp
                 texto='Abrir Galería'
-                color='#B6C4A2'
+                color='#081f37'
                 accion={pickImages}
             />
         </View>
@@ -58,7 +58,7 @@ export const Subida = ({ navigation, route }: Props) => {
         <View style={{ marginTop: 15, marginBottom: 30 }}>
             <ButtonApp
                 texto='Abrir Cámara'
-                color='#B6C4A2'
+                color='#081f37'
                 accion={AbrirCamara}
             />
         </View>
@@ -71,12 +71,12 @@ export const Subida = ({ navigation, route }: Props) => {
                 <Text style={styles.TextoSecundario}>Acciones</Text>
                 <ButtonApp
                     texto='Cancelar'
-                    color='#D80032'
+                    color='#9f1349'
                     accion={() => setSelectedImages([])}
                 />
                 <ButtonApp
                     texto='Subir imagen(es) a carpeta'
-                    color='#93C0A4'
+                    color='#081f37'
                     accion={SubirImagen}
                 />
             </View>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 10,
         paddingBottom: 20,
-        backgroundColor: '#8E9B90',
+        backgroundColor: '#407088',
         elevation: 1
     },
     TextoPrincipal: {

@@ -17,7 +17,7 @@ export const PrincipalScreen = ({ navigation }: Props) => {
         navigation.setOptions({
             headerBackTitle: '',
             headerStyle: {
-                backgroundColor: '#5C685E', // Cambia el color de fondo de la barra de navegación
+                backgroundColor: '#22313f', // Cambia el color de fondo de la barra de navegación
             },
             headerTintColor: 'white', // Cambia el color del texto del título
         })
@@ -38,7 +38,7 @@ export const PrincipalScreen = ({ navigation }: Props) => {
                             accion={() => navigation.navigate("SubidaScreen", {
                                 carpeta: carpeta
                             })}
-                            color='#5C685E'
+                            color='#081f37'
                         />
                     </View>
                 ))}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 20,
         paddingBottom: 20,
-        backgroundColor: '#8E9B90',
+        backgroundColor: '#407088',
         elevation: 1
     },
     TextoPrincipal: {
